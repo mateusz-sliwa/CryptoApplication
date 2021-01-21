@@ -69,10 +69,16 @@ def press(button):
 
     elif button == "Decrypt a file":
         file_browser.browse_files_to_decrypt()
-    elif button == "Generate new key":
+    elif button == "Generate key":
         ciphers.write_key()
     elif button == "Load a key":
         file_browser.browse_key()
+    elif button == "Export key":
+        file_browser.export_key()
+
+
+def error_popup(message):
+    app.infoBox("Error", message)
 
 
 app.startTabbedFrame("CryptoApp", row=0, column=0)
@@ -86,7 +92,7 @@ app.stopTab()
 
 # Zakładka - Szyfr XOR
 app.startTab("XOR cipher")
-app.addLabel("l2", "Here you can encrypt or decrypt your text using XOR cipher!")
+app.addLabel("l2", "XOR cipher encryption")
 app.addTextArea("xor_text", text="Message to cipher/decipher")
 app.addEntry("xor_key")
 app.setEntryDefault("xor_key", "Key (a character <A;Z>)")
@@ -94,13 +100,13 @@ app.stopTab()
 
 # Zakładka - Szyfr ROT13
 app.startTab("ROT13 cipher")
-app.addLabel("l3", "Here you can encrypt or decrypt your message using ROT13 cipher! ")
+app.addLabel("l3", "ROT13 cipher encryption")
 app.addTextArea("rot13_text", text="Message to cipher/decipher")
 app.stopTab()
 
 # Zakładka - Szyfr AtBash
 app.startTab("AtBash cipher")
-app.addLabel("l4", "Here you can encrypt or decrypt your message using AtBash cipher")
+app.addLabel("l4", "AtBash cipher encryption")
 app.addTextArea("atbash_text", text="Message to cipher or decipher")
 app.stopTab()
 app.stopNotebook()
@@ -111,7 +117,6 @@ app.addButton("Save", press)
 app.addLabel("Result:")
 app.addTextArea("OutputArea")
 app.addHorizontalSeparator()
-app.addLabel("l5", "Encrypt a file from your computer with generated or your own key")
-app.addButtons(["Generate new key", "Load a key"], press)
+app.addButtons(["Generate key", "Export key", "Load a key"], press)
 app.addButtons(["Encrypt a file", "Decrypt a file"], press)
 app.go()
