@@ -71,14 +71,11 @@ def press(button):
         file_browser.browse_files_to_decrypt()
     elif button == "Generate key":
         ciphers.write_key()
+        app.infoBox("Information", "New key has been generated")
     elif button == "Load a key":
         file_browser.browse_key()
     elif button == "Export key":
         file_browser.export_key()
-
-
-def error_popup(message):
-    app.infoBox("Error", message)
 
 
 app.startTabbedFrame("CryptoApp", row=0, column=0)
