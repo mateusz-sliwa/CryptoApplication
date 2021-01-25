@@ -1,5 +1,4 @@
 """
-Autor - Mateusz Śliwa grupa gc03 - mateusz.sliwa1@edu.uekat.pl
 AppJar - GUI https://github.com/jarvisteach/appJar
 TkInter - Okno dialogowe https://docs.python.org/3/library/tk.html
 Cryptography - szyfrowanie plików https://pypi.org/project/cryptography/
@@ -15,8 +14,8 @@ app.showSplash("CryptoApp", fill='#07244f', stripe='black', fg='white', font=44)
 
 def press(button):
     """
-    Metoda obsługująca przyciski
-    Obecnie otwarta zakładka (tab) będzie "decydować" o tym, która funkcja zostanie wywołana
+    Method that handles buttons
+    The current tab decides of the executed function
     """
     tab = app.getTabbedFrameSelectedTab("CryptoApp")
     result = app.getTextArea("OutputArea")
@@ -79,7 +78,7 @@ def press(button):
 
 
 app.startTabbedFrame("CryptoApp", row=0, column=0)
-# Zakładka - Szyfr Cezara
+# Tab - Caesar's cipher
 app.startTab("Caesar cipher")
 app.addLabel("l1", "Caesar's cipher encryption", row=0, column=0)
 app.addTextArea("caesar_text", text="Message to cipher/decipher")
@@ -87,7 +86,7 @@ app.addSpinBoxRange("caesar_key", 0, 25)
 app.setSpinBoxPos("caesar_key", 0, callFunction=True)
 app.stopTab()
 
-# Zakładka - Szyfr XOR
+# Tab - XOR Cipher
 app.startTab("XOR cipher")
 app.addLabel("l2", "XOR cipher encryption")
 app.addTextArea("xor_text", text="Message to cipher/decipher")
@@ -95,20 +94,20 @@ app.addEntry("xor_key")
 app.setEntryDefault("xor_key", "Key (a character <A;Z>)")
 app.stopTab()
 
-# Zakładka - Szyfr ROT13
+# Tab - ROT13 Cipher
 app.startTab("ROT13 cipher")
 app.addLabel("l3", "ROT13 cipher encryption")
 app.addTextArea("rot13_text", text="Message to cipher/decipher")
 app.stopTab()
 
-# Zakładka - Szyfr AtBash
+# Tab - AtBash cipher
 app.startTab("AtBash cipher")
 app.addLabel("l4", "AtBash cipher encryption")
 app.addTextArea("atbash_text", text="Message to cipher or decipher")
 app.stopTab()
 app.stopNotebook()
 
-# Separatory + przyciski
+# Buttons + separator
 app.addButtons(["Encrypt", "Decrypt"], press)
 app.addButton("Save", press)
 app.addLabel("Result:")

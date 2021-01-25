@@ -1,28 +1,27 @@
-"""Moduł w którym znajdują się funkcje obsługujące okno dialogowe"""
+"""Module handling file browser"""
 import shutil
 from tkinter import filedialog, messagebox
 from ciphers import write_key, load_key, encrypt_file, decrypt_file
 
-# Generowanie klucza do szyfrowania plików
-write_key() # Przy każdym włączeniu aplikacji generuje się nowy klucz
+
+write_key() # everytime you run the app, a new key is generated
 key = load_key()
 
 
 def browse_key():
-    """Wczytaj własny klucz """
+    """Load your pre-owned key"""
     try:
         f_d = filedialog.askopenfilename()
-        # shutil - biblioteka obslugująca operacje high-level na plikach
+        # shutil - high level file operations library
         shutil.copyfile(f_d, "key.key")
     except FileNotFoundError:
         result = messagebox.askyesno("Cancel", "Do you want to cancel?")
-        # w przypadku gdy wybrana zostanie opcja "No" po "Cancel" powtórz wykonanie funkcji
         if not result:
             browse_key()
 
 
 def export_key():
-    """ Eksportuj klucz """
+    """Export current key"""
     try:
         f_d = filedialog.asksaveasfilename(confirmoverwrite=True)
         shutil.copy("key.key", f_d)
@@ -33,7 +32,7 @@ def export_key():
 
 
 def browse_files_to_save(text):
-    """Funkcja obsługujące okno dialogowe do zapisu"""
+    """File browser for saving"""
     if not text:
         messagebox.showwarning("Error", "Result field is empty!")
     else:
@@ -49,7 +48,7 @@ def browse_files_to_save(text):
 
 
 def browse_files_to_encrypt():
-    """Funkcja obsługująca okno dialogowe do szyfrowania pliku"""
+    """File Browser for encryption"""
     try:
         f_d = filedialog.askopenfilename()
         encrypt_file(f_d, key)
@@ -60,7 +59,7 @@ def browse_files_to_encrypt():
 
 
 def browse_files_to_decrypt():
-    """Funkcja obsługująca okno dialogowe do odszyfrowania pliku"""
+    """File browser for decryption"""
     try:
         f_d = filedialog.askopenfilename()
         decrypt_file(f_d, key)

@@ -1,40 +1,37 @@
 """
-Logika cyfrów https://github.com/VoxelPixel/CiphersInPython
-Szyfrowanie plików https://pypi.org/project/cryptography/
-Fernet gwarantuje, że zaszyfrowana za jego pomocą wiadomość nie może zostać dczytana bez klucza.
+Cipher's logic  https://github.com/VoxelPixel/CiphersInPython
+File encryption https://pypi.org/project/cryptography/
 """
 from cryptography.fernet import Fernet
 
 
 def caesar_cipher(text, key):
     """
-    Szyfr Cezara:
-    Każda litera tekstu jawnego (niezaszyfrowanego) zastępowana jest inną
-    oddaloną od niej o stałą liczbę pozycji w alfabecie
+    Caesar's cipher
     """
     result = ""
-    # entry w appJar zwracają tylko zmienne typu float zatem należy je przekonwertować jawnie na int
+    # entry in appJar returns float, therefore it's got to be converted to int
     c_key = int(key)
     for i, _ in enumerate(text):
-        if ord(text[i]) == 32:  # ord zwraca Unicode znaku (32 to spacja)
-            result += chr(ord(text[i]))  # chr konwertuje int (ASCII) do zmienneij typu char
+        if ord(text[i]) == 32:  # ord returns Unicode of a character (32 to is space)
+            result += chr(ord(text[i]))  # chr converts int (ASCII) to char
         elif ord(text[i]) + c_key > 122:
-            # po 'z' wróć do 'a', 'a' = 97, 'z' = 122
+            # after 'z' return to 'a', 'a' = 97, 'z' = 122
             template = (ord(text[i]) + c_key) - 122
             result += chr(96 + template)
         elif ord(text[i]) + c_key > 90 and ord(text[i]) <= 96:
-            # powrót do 'A' po 'Z'
+            # return to do 'A' after 'Z'
             template = (ord(text[i]) + c_key) - 90
             result += chr(64 + template)
         else:
-            # warunek w przypadku występowania liter pomiędzy a-z i A-Z
+            # in case of letters between a-z and A-Z
             result += chr(ord(text[i]) + c_key)
     print(result)
     return result
 
 
 def caesar_decipher(text, key):
-    """Odwrócenie szyfru Cezara"""
+    """Caesar's cipher analogic"""
     result = ""
     c_key = int(key)
     for i, _ in enumerate(text):
@@ -54,7 +51,7 @@ def caesar_decipher(text, key):
 
 
 def xor_cipher(text, key):
-    """Szyfr XOR"""
+    """XOR Cipher"""
     length = len(text)
     for i in range(length):
         text = (text[:i] +
@@ -66,7 +63,7 @@ def xor_cipher(text, key):
 
 
 def rot13_cipher(text):
-    """Szyfr ROT13"""
+    """ROT 13 Cipher"""
     text = text.upper()
     key = 13
     result = ""
@@ -84,7 +81,7 @@ def rot13_cipher(text):
 
 
 def rot13_decipher(text):
-    """Klucz zostaje odjęty zamiast dodany"""
+    """Key is removed instead of added"""
     text = text.upper()
     key = 13
     result = ""
@@ -102,7 +99,7 @@ def rot13_decipher(text):
 
 
 def atbash_cipher(text):
-    """Szyfr AtBash"""
+    """AtBash cipher"""
     text = text.upper()
     alfabet = dict(A='Z', B='Y', C='X', D='W', E='V', F='U',
                   G='T', H='S', I='R', J='Q', K='P', L='O',
@@ -111,12 +108,12 @@ def atbash_cipher(text):
                   Y='B', Z='A')
     result = ''
     for letter in text:
-        # sprawdź spację
+        # check for spaces
         if letter != ' ':
-            # dodaj odpowiadającą literę z alfabetu
+            # add a relevant letter from dictionary
             result += alfabet[letter]
         else:
-            # Dodaj spację
+            # add space
             result += ' '
     print("Encrypted message: {}".format(result))
     return result
@@ -124,19 +121,19 @@ def atbash_cipher(text):
 
 # Szyfrowanie plików
 def write_key():
-    """Generowanie klucza do kolejnych metod"""
-    key = Fernet.generate_key()  # Generuje klucz i zapisuje go do  pliku
+    """Generate a key"""
+    key = Fernet.generate_key()  # Generate key and save it
     with open("key.key", "wb") as key_file:
         key_file.write(key)
 
 
 def load_key():
-    """Załadowanie klucza do bieżącego katalogu"""
+    """Load a key to the current catalogue"""
     return open("key.key", "rb").read()
 
 
 def encrypt_file(filename, key):
-    """Szyfrowanie pliku"""
+    """File encryption"""
     f_key = Fernet(key)
     with open(filename, "rb") as file:
         file_data = file.read()
@@ -146,11 +143,11 @@ def encrypt_file(filename, key):
 
 
 def decrypt_file(filename, key):
-    """Odszyfrowanie pliku"""
+    """File decryption"""
     f_key = Fernet(key)
     with open(filename, "rb") as file:
         encrypted_data = file.read()
     decrypted_data = f_key.decrypt(encrypted_data)
-    decrypted_data.decode("utf-8")  # dekodowanie z bytes na string
+    decrypted_data.decode("utf-8")  # decode bytes to string
     with open(filename, "wb") as file:
         file.write(decrypted_data)
